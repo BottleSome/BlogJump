@@ -6,7 +6,7 @@
 	  <title>Moved</title>
 </head>
 <h3>Opps，博客搬迁了</h3>
-<p>马上将为您跳转（大概3秒？</p>
+<p>点击页面为你跳转</p>
 <p><img style='max-width:100%;' src='https://ww2.sinaimg.cn/large/006Xmmmggy1g57mdnujubj30m80faq6p.jpg'></img></p>
 <script>
 var tr = function(url) {
@@ -49,9 +49,11 @@ if (u.indexOf('#') == -1) {
         }
     }
 }
+document.body.addEventListener('click',function(){
 setTimeout(function() {
     window.open(turl, '_self');
 },
 3000);
+});
 </script>
-<a href="http://beian.miit.gov.cn" target="_blank">闽 ICP 备 17007528 号 - 3</a> 
+<a href="http://beian.miit.gov.cn" target="_blank" style='color:#A4A4A4;'>闽 ICP 备 17007528 号 - 3</a> 
