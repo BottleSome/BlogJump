@@ -1,0 +1,60 @@
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta name="referrer" content="no-referrer" />
+	  <title>Moved</title>
+</head>
+<h3>Opps，博客搬迁了</h3>
+<p>点击页面为你跳转</p>
+<p><img style='max-width:100%;' referrerPolicy="no-referrer" src='https://ww2.sinaimg.cn/large/006Xmmmggy1g57mdnujubj30m80faq6p.jpg'></img></p>
+<script>
+var tr = function(url) {
+    /*PreventURLProblem(Fuck QQ Querying URI*/
+    var a = url;
+    b = a.split('?');
+    if (b[1]) {
+        return b[0];
+    } else {
+        return a;
+    }
+}
+var u = tr(window.location.href);
+var turl = '';
+if (u.indexOf('#') == -1) {
+    turl = 'https://bottle.moe';
+} else {
+    var r = u.split('#')[1];
+    if (r.split('/')[0] == 'tag') {
+        var t = r.split('/')[1];
+        if (t) {
+            turl = 'https://bottle.moe/tag#' + t;
+        } else {
+            turl = 'https://bottle.moe/tag';
+        }
+    } else if (r.split('/')[0] == 'm') {
+        var p = r.split('/')[1];
+        if (!p) {
+            turl = 'https://bottle.moe';
+        } else {
+            turl = 'https://bottle.moe/#' + parseInt(p);
+        }
+    } else if (r.indexOf('!') !== -1) {
+        var p = r.split('!')[1];
+        if (!isNaN(p)) {
+            turl = 'https://bottle.moe/post-' + parseInt(p);
+        } else {
+            p = p.replace('/', '-');
+            turl = 'https://bottle.moe/' + p;
+        }
+    }
+}
+document.body.addEventListener('click',function(){
+alert('我们的目标是——星辰大海！');
+setTimeout(function() {
+    window.open(turl, '_self');
+},
+2000);
+});
+</script>
+<a href="http://beian.miit.gov.cn" target="_blank" style='color:#A4A4A4;'>闽ICP备17007528号-3</a> 
