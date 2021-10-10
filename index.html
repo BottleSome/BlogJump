@@ -33,10 +33,13 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        fetch("https://cdn.jsdelivr.net/gh/SomeBottle/somebottle@2.0/README.md")
+        if(typeof localStorage.somebottlereadme !== 'undefined') document.querySelector(".markdown-body").innerHTML = localStorage.somebottlereadme;
+        fetch("https://github-readme.somebottle.workers.dev/")
             .then((resp) => resp.text())
             .then((resp) => {
-                document.querySelector(".markdown-body").innerHTML = marked(resp)
+                let ready = marked(resp);
+                document.querySelector(".markdown-body").innerHTML = ready;
+                localStorage.somebottlereadme = ready;
             })
     </script>
 </body>
