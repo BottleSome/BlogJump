@@ -33,7 +33,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        fetch("https://cdn.jsdelivr.net/gh/SomeBottle/somebottle@1.0/README.md")
+        fetch("https://cdn.jsdelivr.net/gh/SomeBottle/somebottle@2.0/README.md")
             .then((resp) => resp.text())
             .then((resp) => {
                 document.querySelector(".markdown-body").innerHTML = marked(resp)
