@@ -31,13 +31,13 @@
             <p><a href="http://beian.miit.gov.cn" target="_blank">闽ICP备17007528号-3</a></p>
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/markdown-it@latest/dist/markdown-it.min.js'></script>
     <script>
         if(typeof localStorage.somebottlereadme !== 'undefined') document.querySelector(".markdown-body").innerHTML = localStorage.somebottlereadme;
         fetch("https://github-readme.somebottle.workers.dev/")
             .then((resp) => resp.text())
             .then((resp) => {
-                let ready = marked(resp);
+                let ready = window.markdownit().render(resp);
                 document.querySelector(".markdown-body").innerHTML = ready;
                 localStorage.somebottlereadme = ready;
             })
