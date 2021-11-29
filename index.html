@@ -37,7 +37,7 @@
         fetch("https://github-readme.somebottle.workers.dev/")
             .then((resp) => resp.text())
             .then((resp) => {
-                let ready = window.markdownit().render(resp);
+                let ready = window.markdownit({ html: true, linkify: true }).render(resp);
                 document.querySelector(".markdown-body").innerHTML = ready;
                 localStorage.somebottlereadme = ready;
             })
