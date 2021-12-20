@@ -34,7 +34,7 @@
     <script src='https://cdn.jsdelivr.net/npm/markdown-it@latest/dist/markdown-it.min.js'></script>
     <script>
         if(typeof localStorage.somebottlereadme !== 'undefined') document.querySelector(".markdown-body").innerHTML = localStorage.somebottlereadme;
-        fetch("https://github-readme.somebottle.workers.dev/")
+        fetch("https://bottle-ghproxy.ghostchu.com/somebottle/master/README.md")
             .then((resp) => resp.text())
             .then((resp) => {
                 let ready = window.markdownit({ html: true, linkify: true }).render(resp);
