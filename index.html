@@ -2,6 +2,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="origin-when-cross-origin">
     <link href="https://cdn.imbottle.com/static_files/github-markdown-css/github-markdown-dark.css" rel="stylesheet" type="text/css"></link>
     <style>
         body {
@@ -45,7 +46,11 @@
     <script src='https://cdn.imbottle.com/static_files/markdown/markdown-it.min.js'></script>
     <script>
         if(typeof localStorage.somebottlereadme !== 'undefined') document.querySelector(".markdown-body").innerHTML = localStorage.somebottlereadme;
-        fetch("https://bottle-ghproxy.ghostchu.com/README.md")
+        fetch("https://bottle-ghproxy.ghostchu.com/README.md", {
+             method: 'GET',
+             mode: 'cors', 
+             credentials: 'omit'
+        })
             .then((resp) => resp.text())
             .then((resp) => {
                 let ready = window.markdownit({ html: true, linkify: true }).render(resp);
