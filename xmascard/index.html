@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X'mas Card 2015</title>
+    <style>
+        h1 {
+            margin: 5px 0;
+        }
+
+        .card {
+            position: relative;
+            max-width: 100%;
+            width: 800px;
+            height: 450px;
+        }
+
+        .credit {
+            position: relative;
+            margin-top: 1em;
+        }
+
+        .smaller {
+            color: #6d6d6d;
+            font-size: .9rem;
+            margin: 5px 0;
+        }
+
+        .smaller a {
+            color: #2795e3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>2015 圣诞贺卡</h1>
+    <p class="desc">制作于 2015.12，于 2025.8.20 重返网页。</p>
+    <div class="card"></div>
+    <div class="credit">
+        <p class="smaller">感谢 <a href="https://ruffle.rs" target="_blank">Ruffle</a> 技术让咱的 Flash 影片能回归网页。</p>
+        <p class="smaller">由于 Ruffle 对 CJK 字符的支持仍有 BUG，影片中不受支持的字符经反编译修改替换成了英文。</p>
+    </div>
+    <script>
+        const aspectRatio = 450 / 800;
+        const cardContainer = document.querySelector(".card");
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.addEventListener("load", function () {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            cardContainer.appendChild(player);
+            player.ruffle().load("../flash/xmas2015.swf");
+            player.style.width = '100%';
+            player.style.height = '100%';
+        });
+
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const width = entry.contentRect.width;
+                cardContainer.style.height = (width * aspectRatio) + "px";
+            }
+        });
+
+        resizeObserver.observe(cardContainer);
+
+    </script>
+    <script src="https://cdn.imbottle.com/static_files/ruffle/ruffle.js"></script>
+</body>
+
+</html>

@@ -1,49 +1,70 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
-	<head>
-		<title>瓶纸的小窝</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<style type="text/css" media="screen">
-		html, body { height:100%; background-color: #ffffff;}
-		body { margin:0; padding:0; overflow:hidden; }
-		#flashContent { width:100%; height:100%; }
-		</style>
-	</head>
-	<body>
-		<div id="flashContent">
-			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="100%" height="100%" id="瓶纸的小窝" align="middle">
-				<param name="movie" value="xw.swf" />
-				<param name="quality" value="high" />
-				<param name="bgcolor" value="#ffffff" />
-				<param name="play" value="true" />
-				<param name="loop" value="true" />
-				<param name="wmode" value="window" />
-				<param name="scale" value="exactfit" />
-				<param name="menu" value="true" />
-				<param name="devicefont" value="false" />
-				<param name="salign" value="" />
-				<param name="allowScriptAccess" value="sameDomain" />
-				<!--[if !IE]>-->
-				<object type="application/x-shockwave-flash" data="xw.swf" width="100%" height="100%">
-					<param name="movie" value="xw.swf" />
-					<param name="quality" value="high" />
-					<param name="bgcolor" value="#ffffff" />
-					<param name="play" value="true" />
-					<param name="loop" value="true" />
-					<param name="wmode" value="window" />
-					<param name="scale" value="exactfit" />
-					<param name="menu" value="true" />
-					<param name="devicefont" value="false" />
-					<param name="salign" value="" />
-					<param name="allowScriptAccess" value="sameDomain" />
-				<!--<![endif]-->
-					<a href="http://www.adobe.com/go/getflash">
-						<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="获得 Adobe Flash Player" />
-					</a>
-				<!--[if !IE]>-->
-				</object>
-				<!--<![endif]-->
-			</object>
-		</div>
-	</body>
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>瓶纸的小窝</title>
+	<style>
+		h1 {
+			margin: 5px 0;
+		}
+
+		.card {
+			position: relative;
+			max-width: 100%;
+			width: 800px;
+			height: 400px;
+		}
+
+		.credit {
+			position: relative;
+			margin-top: 1em;
+		}
+
+		.smaller {
+			color: #6d6d6d;
+			font-size: .9rem;
+			margin: 5px 0;
+		}
+
+		.smaller a {
+			color: #2795e3;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>瓶纸的小窝</h1>
+	<p class="desc">制作于 2016.7，于 2025.8.20 重返网页。</p>
+	<div class="card"></div>
+	<div class="credit">
+		<p class="smaller">感谢 <a href="https://ruffle.rs" target="_blank">Ruffle</a> 技术让咱的 Flash 影片能回归网页。</p>
+	</div>
+	<script>
+		const aspectRatio = 400 / 800;
+		const cardContainer = document.querySelector(".card");
+		window.RufflePlayer = window.RufflePlayer || {};
+		window.addEventListener("load", function () {
+			const ruffle = window.RufflePlayer.newest();
+			const player = ruffle.createPlayer();
+			cardContainer.appendChild(player);
+			player.ruffle().load("./xw.swf");
+			player.style.width = '100%';
+			player.style.height = '100%';
+		});
+
+		const resizeObserver = new ResizeObserver(entries => {
+			for (let entry of entries) {
+				const width = entry.contentRect.width;
+				cardContainer.style.height = (width * aspectRatio) + "px";
+			}
+		});
+
+		resizeObserver.observe(cardContainer);
+
+	</script>
+	<script src="https://cdn.imbottle.com/static_files/ruffle/ruffle.js"></script>
+</body>
+
 </html>
