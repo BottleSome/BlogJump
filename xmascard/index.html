@@ -36,7 +36,7 @@
 
 <body>
     <h1>2015 圣诞贺卡</h1>
-    <p class="desc">制作于 2015.12，于 2025.8.20 重返网页。</p>
+    <p class="desc">制作于 2015.12，于 2025.8.20 重返网页。加载可能要些时间，请耐心等待。</p>
     <div class="card"></div>
     <div class="credit">
         <p class="smaller">感谢 <a href="https://ruffle.rs" target="_blank">Ruffle</a> 技术让咱的 Flash 影片能回归网页。</p>
@@ -50,7 +50,7 @@
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             cardContainer.appendChild(player);
-            player.ruffle().load("../flash/xmas2015.swf");
+            player.ruffle().load("https://cdn.imbottle.com/flash/xmas2015.swf");
             player.style.width = '100%';
             player.style.height = '100%';
         });
