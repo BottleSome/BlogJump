@@ -3,29 +3,224 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="referrer" content="origin-when-cross-origin">
-    <link href="https://cdn.imbottle.com/static_files/github-markdown-css/github-markdown-dark.css" rel="stylesheet" type="text/css"></link>
+    </link>
     <style>
+        @font-face {
+            font-family: 'FusionPixel';
+            src: url('https://cdn.imbottle.com/static_files/fonts/fusion-pixel-12px-monospaced-zh_hans.otf.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --title-color: #f7f7f7;
+            --text-color: #f7f7f7;
+            --background-color: #323438;
+            --font-family: 'FusionPixel', sans-serif;
+            --right-column-width: 42%;
+            --right-column-min-width: 300px;
+            --a-color: #a3c8da;
+            --a-hover-color: #f7f7f7;
+        }
+
         body {
             margin: 1em;
-            background-color: #0d1117;
+            background-color: var(--background-color);
         }
-        
+
+        a {
+            color: var(--a-color);
+            transition: .5s ease;
+        }
+
+        a:hover {
+            color: var(--a-hover-color);
+        }
+
         img {
             border-radius: .2em;
         }
-        
+
         footer p a {
             color: rgb(134, 134, 134);
             text-decoration: none;
         }
-        
+
         .container {
             max-width: 870px;
             margin: 0 auto;
         }
-        
-        .container .h1Title{
-            color: #f7f7f7;
+
+        .container .site-title {
+            color: var(--title-color);
+            font-family: var(--font-family);
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-top: 1rem;
+            margin-bottom: 1.7rem;
+        }
+
+        .lang-sel {
+            display: inline-block;
+            font-size: .9rem;
+            margin-left: .2rem;
+        }
+
+        .lang-item {
+            display: inline-block;
+            margin-right: 0.05rem;
+        }
+
+        .lang-item a {
+            text-decoration: none;
+        }
+
+        .lang-active a {
+            color: var(--a-hover-color);
+        }
+
+        .masked {
+            filter: blur(.15rem);
+            transition: .3s ease;
+        }
+
+        .masked:hover {
+            filter: none;
+        }
+
+        .markdown-body {
+            color: var(--text-color);
+        }
+
+        .markdown-body h2 {
+            font-family: var(--font-family);
+            font-size: 1.3rem;
+            font-weight: normal;
+            margin-top: .2rem;
+            margin-bottom: 1.7rem;
+        }
+
+        .markdown-body h2::before {
+            content: "▷";
+            color: var(--title-color);
+            margin-right: .7rem;
+        }
+
+        .markdown-body p {
+            font-family: var(--font-family);
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body ul {
+            font-family: var(--font-family);
+            margin: 1.7rem 0;
+            padding-left: 2rem;
+        }
+
+        .markdown-body li {
+            margin: .7rem 0;
+        }
+
+        .markdown-body pre {
+            background-color: #2d2d2d;
+            padding: 15px 10px;
+            border-radius: 5px;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        /* Introduction Section */
+
+        .introduction {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .introduction .left-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .introduction .right-column {
+            width: var(--right-column-width);
+            min-width: var(--right-column-min-width);
+            text-align: right;
+        }
+
+        .introduction .right-column img {
+            max-width: 100%;
+            max-height: 342px;
+        }
+
+        .quote-source {
+            text-align: right;
+        }
+
+        .quote-source::before {
+            content: "—— ";
+        }
+
+        /* Links Section */
+
+        .links {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .links .left-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .links .right-column {
+            width: var(--right-column-width);
+            min-width: var(--right-column-min-width);
+            text-align: right;
+        }
+
+        .links .right-column img {
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: 665px) {
+            .introduction {
+                flex-direction: column-reverse;
+            }
+
+            .introduction .left-column {
+                margin-right: 0;
+                margin-top: 10px;
+            }
+
+            .introduction .right-column {
+                width: 100%;
+                min-width: unset;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            .links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .links .left-column {
+                margin-right: 0;
+            }
+
+            .links .right-column {
+                width: 100%;
+                min-width: unset;
+                margin-top: 15px;
+                text-align: center;
+            }
         }
     </style>
     <title>些瓶的小站</title>
@@ -33,9 +228,13 @@
 
 <body>
     <div class="container">
-        <h1 class="h1Title" style="color: #f7f7f7;">
+        <div class="site-title" style="color: #f7f7f7;">
             些瓶的小站
-        </h1>
+            <div class="lang-sel">
+                <div class="lang-item lang-active" data-lang="zh">[<a href="javascript:void(0);">中文</a>]</div>
+                <div class="lang-item" data-lang="en">[<a href="javascript:void(0);">English</a>]</div>
+            </div>
+        </div>
         <div class="markdown-body">
             个人介绍拉取中...
         </div>
@@ -45,17 +244,57 @@
     </div>
     <script src='https://cdn.imbottle.com/static_files/markdown/markdown-it.min.js'></script>
     <script>
-        if(typeof localStorage.somebottlereadme !== 'undefined') document.querySelector(".markdown-body").innerHTML = localStorage.somebottlereadme;
-        fetch("https://cdn.imbottle.com/about/README.md", {
-             method: 'GET',
-             mode: 'cors', 
-             credentials: 'omit'
-        })
-            .then((resp) => resp.text())
-            .then((resp) => {
-                let ready = window.markdownit({ html: true, linkify: true }).render(resp);
-                document.querySelector(".markdown-body").innerHTML = ready;
-                localStorage.somebottlereadme = ready;
+        let currentLang = '';
+        const langItems = document.querySelectorAll('.lang-item');
+        // 切换语言并获取指定语言的 README
+        const switchAndGet = (lang) => {
+            if (currentLang === lang) {
+                return;
+            }
+            if (lang === 'en') {
+                alert('Oops, the English version is under construction. (╬▔皿▔)╯');
+                return;
+            }
+            let fileName = `README_${lang}.md`;
+            const markdownBody = document.querySelector(".markdown-body");
+            markdownBody.innerHTML = "Loading...";
+            if (localStorage.getItem(`somebottle-readme-${lang}`)) {
+                markdownBody.innerHTML = localStorage.getItem(`somebottle-readme-${lang}`);
+            }
+            fetch(`https://cdn.imbottle.com/about/${fileName}`, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'omit'
             })
+                .then((resp) => resp.text())
+                .then((resp) => {
+                    let ready = window.markdownit({ html: true, linkify: true }).render(resp);
+                    document.querySelector(".markdown-body").innerHTML = ready;
+                    localStorage.setItem(`somebottle-readme-${lang}`, ready);
+                })
+
+            currentLang = lang;
+            localStorage.setItem('somebottle-lang', lang);
+            // 更新语言切换按钮状态
+            for (let langItem of langItems) {
+                if (langItem.getAttribute('data-lang') === lang) {
+                    langItem.classList.add('lang-active');
+                } else {
+                    langItem.classList.remove('lang-active');
+                }
+            }
+        };
+        let defaultLang = "zh";
+        if (localStorage.getItem('somebottle-lang')) {
+            defaultLang = localStorage.getItem('somebottle-lang');
+        }
+        switchAndGet(defaultLang);
+        // 绑定语言切换事件
+        for (let langItem of langItems) {
+            langItem.addEventListener('click', (e) => {
+                let lang = langItem.getAttribute('data-lang');
+                switchAndGet(lang);
+            });
+        }
     </script>
 </body>
