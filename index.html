@@ -369,6 +369,10 @@
                         .then((data) => {
                             readmeCache[lang] = data;
                             resolve(data);
+                        })
+                        .catch((err) => {
+                            console.error(`Error fetching ${fileName}:`, err);
+                            resolve(`## Error\n\nFailed to load the introduction file. Please refresh the page.`);
                         });
                 }
             }).then((resp) => {
