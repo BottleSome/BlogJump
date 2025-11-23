@@ -22,6 +22,9 @@
             --right-column-min-width: 300px;
             --a-color: #a3c8da;
             --a-hover-color: #f7f7f7;
+            --tooltip-background-color: rgb(99 118 138);
+            --tooltip-top: 95%;
+            --tooltip-top-hover: 101%;
         }
 
         body {
@@ -38,8 +41,60 @@
             color: var(--a-hover-color);
         }
 
+        p {
+            line-height: 1.2rem;
+        }
+
         img {
             border-radius: .2em;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-desc);
+            line-height: 1.2rem;
+            font-family: var(--font-family);
+            text-align: center;
+            border-radius: .5em;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            left: 0;
+            padding: .5em 0;
+            top: calc(var(--tooltip-top) + 14px);
+            color: var(--text-color);
+            background-color: var(--tooltip-background-color);
+            opacity: 0;
+            overflow-y: hidden;
+            transition: .3s ease;
+            pointer-events: none;
+        }
+
+        .tooltip::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: var(--tooltip-top);
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            clip-path: polygon(0 100%, 50% 0, 100% 100%);
+            background-color: var(--tooltip-background-color);
+            opacity: 0;
+            transition: .3s ease;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            top: calc(var(--tooltip-top-hover) + 14px);
+        }
+
+        .tooltip:hover::before {
+            opacity: 1;
+            top: var(--tooltip-top-hover);
         }
 
         footer p a {
@@ -136,6 +191,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            align-items: center;
             width: 100%;
             margin-bottom: 10px;
         }
@@ -151,16 +207,29 @@
             text-align: right;
         }
 
+        .introduction .right-column .img-wrapper {
+            display: inline-block;
+        }
+
         .introduction .right-column img {
             max-width: 100%;
-            max-height: 342px;
+            max-height: 350px;
         }
 
-        .quote-source {
+        .markdown-body .quote-text::before {
+            content: "⌜";
+        }
+
+        .markdown-body .quote-text::after {
+            content: "⌟";
+        }
+
+        .markdown-body .quote-source {
             text-align: right;
+            margin-bottom: 1rem;
         }
 
-        .quote-source::before {
+        .markdown-body .quote-source::before {
             content: "—— ";
         }
 
@@ -187,6 +256,10 @@
 
         .links .right-column img {
             max-width: 100%;
+        }
+
+        footer {
+            font-family: var(--font-family);
         }
 
         @media screen and (max-width: 665px) {
@@ -226,52 +299,83 @@
     <title>些瓶的小站</title>
 </head>
 
-<body>
-    <div class="container">
-        <div class="site-title" style="color: #f7f7f7;">
-            些瓶的小站
-            <div class="lang-sel">
-                <div class="lang-item lang-active" data-lang="zh">[<a href="javascript:void(0);">中文</a>]</div>
-                <div class="lang-item" data-lang="en">[<a href="javascript:void(0);">English</a>]</div>
-            </div>
+<template id="template">
+    <div class="site-title" style="color: #f7f7f7;">
+        {{ siteTitle }}
+        <div class="lang-sel">
+            <div class="lang-item lang-active" data-lang="zh">[<a href="javascript:void(0);">中文</a>]</div>
+            <div class="lang-item" data-lang="en">[<a href="javascript:void(0);">English</a>]</div>
         </div>
-        <div class="markdown-body">
-            个人介绍拉取中...
-        </div>
-        <footer>
-            <p><a href="http://beian.miit.gov.cn" target="_blank">闽ICP备17007528号-3</a></p>
-        </footer>
     </div>
+    <div class="markdown-body">
+        {{ loadingText }}
+    </div>
+    <footer>
+        <p><a href="http://beian.miit.gov.cn" target="_blank">闽ICP备17007528号-3</a></p>
+    </footer>
+</template>
+
+<body>
+    <div class="container"></div>
     <script src='https://cdn.imbottle.com/static_files/markdown/markdown-it.min.js'></script>
     <script>
+        const templateMapping = {
+            "zh": {
+                siteTitle: "些瓶的小站",
+                loadingText: "个人介绍拉取中..."
+            },
+            "en": {
+                siteTitle: "Bottle's Site",
+                loadingText: "Loading introduction..."
+            }
+        };
+        const readmeCache = {};
+        const containerElement = document.querySelector('.container');
+        const templateElement = document.getElementById('template');
         let currentLang = '';
-        const langItems = document.querySelectorAll('.lang-item');
         // 切换语言并获取指定语言的 README
         const switchAndGet = (lang) => {
             if (currentLang === lang) {
                 return;
             }
-            if (lang === 'en') {
-                alert('Oops, the English version is under construction. (╬▔皿▔)╯');
-                return;
-            }
+            // 替换模板占位符
             let fileName = `README_${lang}.md`;
+            const mapping = templateMapping[lang];
+            // 找到所有的占位符进行替换
+            containerElement.innerHTML = templateElement.innerHTML.replace(/{{\s*([A-Za-z0-9_\-]+)\s*}}/g, (match, p1) => {
+                return mapping[p1] || match;
+            });
+            // 给语言切换按钮绑定事件
+            const langItems = document.querySelectorAll('.lang-item');
+            for (let langItem of langItems) {
+                langItem.onclick = (e) => {
+                    let lang = langItem.getAttribute('data-lang');
+                    switchAndGet(lang);
+                }
+            }
             const markdownBody = document.querySelector(".markdown-body");
-            markdownBody.innerHTML = "Loading...";
             if (localStorage.getItem(`somebottle-readme-${lang}`)) {
                 markdownBody.innerHTML = localStorage.getItem(`somebottle-readme-${lang}`);
             }
-            fetch(`https://cdn.imbottle.com/about/${fileName}`, {
-                method: 'GET',
-                mode: 'cors',
-                credentials: 'omit'
-            })
-                .then((resp) => resp.text())
-                .then((resp) => {
-                    let ready = window.markdownit({ html: true, linkify: true }).render(resp);
-                    document.querySelector(".markdown-body").innerHTML = ready;
-                    localStorage.setItem(`somebottle-readme-${lang}`, ready);
-                })
+            new Promise((resolve) => {
+                if (readmeCache[lang]) {
+                    resolve(readmeCache[lang]);
+                } else {
+                    fetch(`https://cdn.imbottle.com/about/${fileName}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'omit'
+                    }).then((resp) => resp.text())
+                        .then((data) => {
+                            readmeCache[lang] = data;
+                            resolve(data);
+                        });
+                }
+            }).then((resp) => {
+                let ready = window.markdownit({ html: true, linkify: true }).render(resp);
+                document.querySelector(".markdown-body").innerHTML = ready;
+                localStorage.setItem(`somebottle-readme-${lang}`, ready);
+            });
 
             currentLang = lang;
             localStorage.setItem('somebottle-lang', lang);
@@ -284,17 +388,11 @@
                 }
             }
         };
-        let defaultLang = "zh";
+        // 选中的语言
+        let selectedLang = "zh";
         if (localStorage.getItem('somebottle-lang')) {
-            defaultLang = localStorage.getItem('somebottle-lang');
+            selectedLang = localStorage.getItem('somebottle-lang');
         }
-        switchAndGet(defaultLang);
-        // 绑定语言切换事件
-        for (let langItem of langItems) {
-            langItem.addEventListener('click', (e) => {
-                let lang = langItem.getAttribute('data-lang');
-                switchAndGet(lang);
-            });
-        }
+        switchAndGet(selectedLang);
     </script>
 </body>
