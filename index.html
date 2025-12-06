@@ -350,6 +350,7 @@
             for (let langItem of langItems) {
                 langItem.onclick = (e) => {
                     let lang = langItem.getAttribute('data-lang');
+                    location.hash = `#/lang/${lang}`;
                     switchAndGet(lang);
                 }
             }
@@ -396,6 +397,10 @@
         let selectedLang = "zh";
         if (localStorage.getItem('somebottle-lang')) {
             selectedLang = localStorage.getItem('somebottle-lang');
+        }
+        let hashLang = location.hash.replace('#/lang/','').trim();
+        if (Object.keys(templateMapping).indexOf(hashLang)!=-1) {
+            selectedLang = hashLang;
         }
         switchAndGet(selectedLang);
     </script>
